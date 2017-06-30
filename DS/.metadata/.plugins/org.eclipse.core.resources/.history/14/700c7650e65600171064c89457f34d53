@@ -1,0 +1,23 @@
+package math;
+
+public class Divide2Numbers {
+	//Divide two integers without using multiplication, division and mod operator.
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(divide(3,-3));
+	}
+	public static int divide(int dividend, int divisor) {
+        if(divisor == 0)    return Integer.MAX_VALUE;
+        if(dividend == 0)  return 0;
+        int qoutient = 1, runningSum = divisor;
+        boolean negFlag = dividend < 0 || divisor < 0 ?true:false;
+        dividend = Math.abs(dividend);
+        divisor  = Math.abs(divisor);
+        while(runningSum < dividend){
+            qoutient++;
+            runningSum += divisor;
+        }
+        return negFlag ==  false? qoutient: -1 * qoutient;
+    }
+
+}

@@ -1,0 +1,21 @@
+package math;
+
+public class SQRT {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(mySqrt(1024));
+	}
+	
+	public static int mySqrt(int x) {
+        if(x==0) return 0;
+        int low = 1, high = x;
+        while(low + 1< high){
+            int mid = low + (high-low >> 1);
+            if(mid > x / mid)  high = mid;
+            else low = mid;
+        }
+        return low;
+    }
+
+}

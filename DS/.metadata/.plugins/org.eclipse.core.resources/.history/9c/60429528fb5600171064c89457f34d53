@@ -1,0 +1,37 @@
+package math;
+
+public class HappyNumber {
+	/*
+	    1.  Slow- Fast Linked List solution (slow = fast = n)
+	        1a. do - while loop until slow!=fast
+	        1b. Square individual numbers for slow once, fast twice
+	    2.  If slow == 1
+	            return true 
+	        else 
+	            return false
+	
+	*/
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(isHappy(19));
+	}
+	public static int squareSumDigits(int n){
+		int sum = 0, digit = 0;
+		while( n > 0){
+			digit = n %10;
+			sum += Math.pow(digit, 2);
+			n /= 10;
+		}
+		return sum;
+	}
+	public static boolean isHappy(int n) {
+		int slow = n , fast = n;
+		do{
+			slow = squareSumDigits(slow);
+			fast = squareSumDigits(fast);
+			fast = squareSumDigits(fast);
+		}while(slow!=fast);
+		if(slow==1)return true;
+		else return false;
+	}
+}

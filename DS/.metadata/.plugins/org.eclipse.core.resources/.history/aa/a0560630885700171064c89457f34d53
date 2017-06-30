@@ -1,0 +1,56 @@
+package arrays;
+
+public class SortColors {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] input = {2,0,1,0,2,1,1,2,1,1,1,1,1};
+		int[] input2 = {1,1,0,0,2,2};
+		sortColors2(input2);
+	}
+	
+	public static void sortColors2(int A[], int n) {
+	    int j = 0, k = n-1;
+	    for (int i=0; i <= k; i++) {
+	        if (A[i] == 0)
+	            swap(A,i,j++);
+	        else if (A[i] == 2)
+	            swap(A,i--, k--);
+	    }
+	    return;
+	}
+	
+	public static void sortColors(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return;
+        int zeroPointer = 0, onePointer = 0, n = nums.length;
+        //while(zeroPointer < n && nums[zeroPointer++] !=0) ;
+        while(onePointer < n  && nums[onePointer++]  !=1) ;
+        onePointer--;
+        if(zeroPointer >= n-1 || onePointer >= n-1){
+            if(zeroPointer >=n-1 && onePointer >= n-1)
+                return;
+            else if(zeroPointer >= n-1)
+                zeroPointer = onePointer;
+            else 
+                onePointer = zeroPointer;
+        }
+        for(int i = 0; i < n ; i++){
+        	System.out.println("i " + i + " zeroPointer: " + zeroPointer  + " onePointer: " +  onePointer);
+            if(nums[i] == 2){
+                swap(nums,i,onePointer);
+                while(onePointer < n  && nums[onePointer++]  !=1) ;
+                onePointer--;
+            }else if(nums[i] == 0){
+                swap(nums, i , zeroPointer);
+                zeroPointer++;
+            }
+        }
+        return;
+    }
+    public static void swap(int[] nums, int a, int b){
+        int temp = nums[a];
+        nums[a]  = nums[b];
+        nums[b]  = temp;
+    }
+}

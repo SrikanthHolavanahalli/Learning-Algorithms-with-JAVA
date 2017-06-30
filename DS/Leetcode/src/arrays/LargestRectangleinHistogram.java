@@ -1,0 +1,81 @@
+package arrays;
+
+import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+public class LargestRectangleinHistogram {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] input = {2,1,5,7,6,2,3};
+		System.out.println(largestRectangleArea2(input));
+	}
+	
+	public static int largestRectangleArea(int[] height) {
+		 int[] lessFromLeft = new int[height.length]; // idx of the first bar the left that is lower than current
+	        int[] lessFromRight = new int[height.length]; // idx of the first bar the right that is lower than current
+	        lessFromRight[height.length - 1] = height.length;
+	        lessFromLeft[0] = -1;
+	    
+	        for (int i = 1; i < height.length; i++) {
+	            int p = i - 1;
+	    
+	            while (p >= 0 && height[p] >= height[i]) {
+	                p = lessFromLeft[p];
+	            }
+	            lessFromLeft[i] = p;
+	        }
+	    
+	        for (int i = height.length - 2; i >= 0; i--) {
+	            int p = i + 1;
+	    
+	            while (p < height.length && height[p] >= height[i]) {
+	                p = lessFromRight[p];
+	            }
+	            lessFromRight[i] = p;
+	        }
+	    
+	        int maxArea = 0;
+	        for (int i = 0; i < height.length; i++) {
+	            maxArea = Math.max(maxArea, height[i] * (lessFromRight[i] - (lessFromLeft[i] + 1)));
+	        }
+	    
+	        return maxArea;
+    }
+	
+	
+	public static int largestRectangleArea2(int[] height) {
+		int n = height.length,maxArea=0;
+		int[] lessFromLeft = new int[n]; // idx of the first bar the left that is lower than current
+	    int[] lessFromRight = new int[n]; // idx of the first bar the right that is lower than current
+	    lessFromRight[n - 1] = n;
+	    lessFromLeft[0] = -1;
+	    Deque<Integer> stack = new LinkedList<>();
+	    stack.addFirst(lessFromRight[n - 1] -1);
+	    for(int i = n-2; i>=0;i--){
+	    	while(!stack.isEmpty() && height[i]<= height[stack.peek()])
+	    		stack.poll();
+	    	lessFromRight[i] = stack.isEmpty() == true? n:stack.peek();
+	    	stack.push(i);
+	    }
+	    
+	    while(!stack.isEmpty())
+	    	stack.poll();
+	   
+	    stack.addFirst(lessFromLeft[0]+1);
+	    for(int i = 1; i<n;i++){
+	    	while(!stack.isEmpty() && height[i] <= height[stack.peek()])
+	    		stack.poll();
+	    	lessFromLeft[i] = stack.isEmpty() == true? -1:stack.peek();
+	    	stack.push(i);
+	    }
+	    
+	    for(int i = 0 ; i < n; i++)
+	    	maxArea = Math.max(maxArea, height[i] * (lessFromRight[i] - ( lessFromLeft[i] +1)));
+	    
+	        return maxArea;
+	}
+
+}

@@ -1,0 +1,28 @@
+package math;
+
+public class Divide2Numbers {
+	//Divide two integers without using multiplication, division and mod operator.
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println(divide(3,-3));
+	}
+	public static int divide(int dividend, int divisor) {
+		if(divisor == 0)    return Integer.MAX_VALUE;
+        if(dividend == 0 ||  Math.abs(dividend) < Math.abs(divisor))  return 0;
+        boolean negFlag = false;
+        if(dividend < 0 || divisor < 0){
+            if(dividend < 0 && divisor < 0)
+                negFlag = false;
+            else
+                negFlag = true;
+        }
+        dividend = Math.abs(dividend);  divisor  = Math.abs(divisor);
+        int runningSum = divisor,qoutient = 0; // how many times divisor has been added to runningSum
+        while(runningSum < dividend){
+            qoutient++;
+            runningSum += divisor;
+        }
+        return negFlag ==  false? qoutient: -1 * qoutient;
+    }
+
+}

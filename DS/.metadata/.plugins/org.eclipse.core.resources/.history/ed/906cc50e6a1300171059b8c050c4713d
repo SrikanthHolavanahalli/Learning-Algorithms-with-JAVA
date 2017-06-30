@@ -1,0 +1,38 @@
+package trees;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class HouseRobber3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TreeNode root = new TreeNode(3);
+		root.add(root, true, 2);
+		root.add(root.left, false, 3);
+		
+		root.add(root, false, 3);
+		root.add(root.right, false, 1);
+	}
+	
+	public int rob(TreeNode root) {
+        if(root == null) return 0;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        int depth = 0, oddLevelSum  = 0, evenLevelSum = 0;
+        while(!queue.isEmpty()){
+            int levelNum = queue.size() , levelSum = 0;
+            for(int i=0; i<levelNum; i++) {
+                if(queue.peek().left  != null) queue.offer(queue.peek().left);
+                if(queue.peek().right != null) queue.offer(queue.peek().right);
+                levelSum += queue.poll().val;
+            }
+            if(depth%2==0)
+                evenLevelSum += levelSum;
+            else
+                oddLevelSum  += levelSum;
+        }
+        return Math.max(evenLevelSum,oddLevelSum);
+    }
+
+}
